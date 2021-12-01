@@ -12,5 +12,15 @@ client.auth({ username: 'test', password: '1'}, function (error, response) {
         return
     }
 
-    console.log(response)
+    var metadata = new grpc.Metadata();
+    metadata.add('authorization', response.token)
+
+    client.hello({}, metadata, function (error, message) {
+        if (error) {
+            console.log(error.details)
+            return
+        }
+    
+        console.log(message)
+    });
 });
