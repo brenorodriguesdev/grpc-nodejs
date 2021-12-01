@@ -1,6 +1,12 @@
 const grpc = require('grpc')
-const loginProto = grpc.load('login.proto')
+const protoLoader = require('@grpc/proto-loader')
+const path = require('path')
 const server = new grpc.Server()
+
+
+const protoObject = protoLoader.loadSync(path.resolve(__dirname, 'login.proto'))
+const loginProto = grpc.loadPackageDefinition(protoObject)
+
 
 function auth(authModel) {
     const { username, password } = authModel
@@ -26,5 +32,5 @@ server.addService(loginProto.LoginService.service, {
     }
 })
 
-server.bind('127.0.0.1:5051', grpc.ServerCredentials.createInsecure())
+server.bind('127.0.0.1:50051', grpc.ServerCredentials.createInsecure())
 server.start()
