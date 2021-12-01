@@ -29,6 +29,25 @@ server.addService(loginProto.LoginService.service, {
         } catch (error) {
             callback(error, null)
         }
+    },
+    hello: (call, callback) => {
+        try {
+
+            
+            const authorization = call.metadata.get("authorization"); 
+
+            if (!authorization)  {
+                throw new Error('token is required')
+            }
+
+            if (authorization != 'any_token')  {
+                throw new Error('token is invalid')
+            }
+
+            callback(null,  { message: 'hello' })
+        } catch (error) {
+            callback(error, null)
+        }
     }
 })
 
