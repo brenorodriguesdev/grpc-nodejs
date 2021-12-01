@@ -2,6 +2,11 @@ syntax = "proto3";
 
 service LoginService {
     rpc auth (AuthRequest) returns (AuthResponse) {}
+    rpc hello (Void) returns (HelloResponse) {}
+}
+
+message Void {
+
 }
 
 message AuthRequest {
@@ -11,4 +16,8 @@ message AuthRequest {
 
 message AuthResponse {
     string token = 1;
+}
+
+message HelloResponse {
+    string message = 1;
 }
